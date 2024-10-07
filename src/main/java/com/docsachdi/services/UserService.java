@@ -5,13 +5,16 @@ import com.docsachdi.entities.User;
 import com.docsachdi.repositories.BookRepository;
 import com.docsachdi.repositories.UserRepository;
 import com.docsachdi.request.ListUserBookReq;
+import com.docsachdi.request.ListUserReq;
 import com.docsachdi.request.UpdateStatusBookReq;
 import com.docsachdi.response.ListUserBookRes;
+import com.docsachdi.response.ListUserRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -103,5 +106,27 @@ public class UserService {
         res.setBookReadingList(getSetBook(u.getBookReadingList()));
         res.setBookReadList(getSetBook(u.getBookReadList()));
         return res;
+    }
+
+    public List<ListUserRes> getListUser() {
+        List<User> users = userRepository.findAll();
+        return users.stream()
+                .map(user -> {
+                    ListUserRes res = new ListUserRes();
+                    res.setId(user.getId());
+                    res.setUsername(user.getUsername());
+                    res.setEmail(user.getEmail());
+                    return res;
+                })
+                .collect(Collectors.toList());
+    }
+
+    public boolean deleteUser(Long id) {
+        Optional<User> user = userRepository.findById(id);
+        if(!user.isPresent()) {
+            return false;
+        }
+        userRepository.deleteById(id);
+        return true;
     }
 }
