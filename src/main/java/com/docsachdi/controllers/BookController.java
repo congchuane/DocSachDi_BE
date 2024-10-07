@@ -99,4 +99,10 @@ public class BookController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<BookDTO>> searchBooks(@RequestParam String query) {
+        List<BookDTO> books = bookService.searchBooks(query);
+        return ResponseEntity.ok(books);
+    }
+
 }

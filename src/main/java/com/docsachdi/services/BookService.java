@@ -252,4 +252,14 @@ public class BookService {
         }
     }
 
+    public List<BookDTO> searchBooks(String query) {
+        List<Book> searchResults = bookRepository.findByTitleContainingOrAuthorsNameContainingOrTagsNameContaining(query, query, query);;
+
+        List<BookDTO> bookDTOs = new ArrayList<>();
+        for (Book book : searchResults) {
+            bookDTOs.add(convertToBookDTO(book));
+        }
+        return bookDTOs;
+    }
+
 }

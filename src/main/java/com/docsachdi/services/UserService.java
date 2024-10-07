@@ -67,26 +67,32 @@ public class UserService {
             return false;
         }
         Book b = book.get();
-        Set<Long> set= new HashSet<>();
+        Set<Long> setWish= getSetBook(u.getBookWishlist());
+        Set<Long> setRead= getSetBook(u.getBookReadList());
+        Set<Long> setReading= getSetBook(u.getBookReadingList());
+        if(setWish.contains(req.bookId))
+            setWish.remove(req.bookId);
+        if(setReading.contains(req.bookId))
+            setReading.remove(req.bookId);
+        if(setRead.contains(req.bookId))
+            setRead.remove(req.bookId);
         switch (req.status) {
             case 0:
-                set = getSetBook(u.getBookWishlist());
-                set.add(req.bookId);
-                u.setBookWishlist(convertIntSetToString(set));
+                setWish.add(req.bookId);
                 break;
             case 1:
-                set = getSetBook(u.getBookReadingList());
-                set.add(req.bookId);
-                u.setBookReadingList(convertIntSetToString(set));
+                setReading.add(req.bookId);
                 break;
             case 2:
-                set = getSetBook(u.getBookReadList());
-                set.add(req.bookId);
-                u.setBookReadList(convertIntSetToString(set));
+                setRead.add(req.bookId);
                 break;
             default:
                 return false;
         }
+        u.setBookWishlist(convertIntSetToString(setWish));
+        u.setBookReadingList(convertIntSetToString(setReading));
+        u.setBookReadList(convertIntSetToString(setRead));
+        userRepository.save(u);
         return true;
     }
 
