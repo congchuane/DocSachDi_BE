@@ -38,7 +38,7 @@ public class AuthService {
 
     public User authenticateUser(String username, String password) {
         User user = userRepository.findByUsername(username);
-        if (user != null && user.getPassword().equals(password)) {
+        if (user != null && passwordEncoder.matches(password,user.getPassword())) {
             return user;
         }
         return null;
