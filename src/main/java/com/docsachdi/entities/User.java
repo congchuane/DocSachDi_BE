@@ -12,16 +12,46 @@ public class User {
     private String password;
     private String email;
     private String role;
+    private String bookWishlist;
+    private String bookReadList;
+    private String bookReadingList;
+
 
     public User() {}
 
-    public User(String username, String password, String email, String role) {
+    public User(String username, String password, String email, String role, String bookWishlist, String bookReadList, String bookReadingList) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.role = role;
+        this.bookWishlist = bookWishlist;
+        this.bookReadList = bookReadList;
+        this.bookReadingList = bookReadingList;
     }
 
+    public String getBookWishlist() {
+        return bookWishlist;
+    }
+
+    public void setBookWishlist(String bookWishlist) {
+        this.bookWishlist = bookWishlist;
+    }
+
+    public String getBookReadList() {
+        return bookReadList;
+    }
+
+    public void setBookReadList(String bookReadList) {
+        this.bookReadList = bookReadList;
+    }
+
+    public String getBookReadingList() {
+        return bookReadingList;
+    }
+
+    public void setBookReadingList(String bookReadingList) {
+        this.bookReadingList = bookReadingList;
+    }
 
     public Long getId() {
         return id;
